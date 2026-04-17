@@ -1,13 +1,14 @@
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { CupPriceTable } from "@/components/CupPriceTable";
 import { PricingCalculator } from "@/components/PricingCalculator";
 import { Metadata } from "next";
 import React from "react";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Bảng So Sánh Các Loại Ly | In Ly Giá Rẻ",
-  description: "Bảng so sánh chi tiết các loại ly nhựa PP, PET và ly giấy giúp chủ quán dễ dàng lựa chọn loại ly phù hợp cho đồ uống của mình.",
+  title: "Bảng Giá Ly Nhựa PP, PET, Ly Giấy | In Ly Giá Rẻ",
+  description: "Bảng giá ly nhựa PP, PET và ly giấy chi tiết từ nhà cung cấp Uy Kiệt. So sánh giá sỉ, giá lẻ theo chất liệu và dung tích.",
 };
 
 export default function BangGiaPage() {
@@ -65,26 +66,35 @@ export default function BangGiaPage() {
           
           <div className="text-center mb-16">
             <h1 className="text-4xl md:text-5xl lg:text-7xl font-display font-light italic text-[#1a1a1a] tracking-tight mb-4">
-              BẢNG SO SÁNH <span className="text-[#6d8869] font-bold">CÁC LOẠI LY</span>
+              BẢNG GIÁ <span className="text-[#6d8869] font-bold">LY NHỰA</span>
             </h1>
             <p className="text-slate-600 max-w-2xl mx-auto text-sm md:text-base">
-              Bảng so sánh chi tiết giúp bạn hiểu rõ đặc tính của từng dòng ly, qua đó tối ưu chi phí và chọn được loại bao bì ưng ý nhất cho món nước kỷ lục của bạn.
+              Tra cứu giá ly nhựa PP, PET, ly giấy trực tiếp từ nhà cung cấp. Lọc theo chất liệu, kích cỡ hoặc tìm kiếm mã sản phẩm.
             </p>
           </div>
+
+          {/* Cup Price Table */}
+          <CupPriceTable />
 
           {/* Calculator Section */}
           <PricingCalculator />
 
+          {/* Comparison Table */}
           <div className="relative w-full overflow-hidden bg-white/50 backdrop-blur-xl border border-white rounded-[2rem] shadow-2xl mb-24">
+            <div className="text-center pt-10 pb-4">
+              <h2 className="text-2xl md:text-4xl font-display font-light italic text-[#1a1a1a]">
+                So Sánh <span className="text-[#6d8869] font-bold">Chất Liệu</span>
+              </h2>
+            </div>
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse min-w-[800px]">
                 <thead>
                   <tr className="bg-[#1a1a1a] text-white">
-                    <th className="p-6 font-display font-bold tracking-widest text-sm uppercase rounded-tl-[2rem] w-1/5 whitespace-nowrap">Tiêu Chí</th>
-                    <th className="p-6 font-display font-bold tracking-widest text-sm uppercase w-[20%] text-[#f8eb96] whitespace-nowrap">Ly Nhựa PP (Trơn/Sọc)</th>
+                    <th className="p-6 font-display font-bold tracking-widest text-sm uppercase w-1/5 whitespace-nowrap">Tiêu Chí</th>
+                    <th className="p-6 font-display font-bold tracking-widest text-sm uppercase w-[20%] text-[#f8eb96] whitespace-nowrap">Ly PP (Trơn/Sọc)</th>
                     <th className="p-6 font-display font-bold tracking-widest text-sm uppercase w-[20%] whitespace-nowrap">Ly PP Đáy Bầu</th>
-                    <th className="p-6 font-display font-bold tracking-widest text-sm uppercase w-[20%] text-[#b4ac8f] whitespace-nowrap">Ly Nhựa PET Cao Cấp</th>
-                    <th className="p-6 font-display font-bold tracking-widest text-sm uppercase rounded-tr-[2rem] w-[20%] whitespace-nowrap">Ly Giấy</th>
+                    <th className="p-6 font-display font-bold tracking-widest text-sm uppercase w-[20%] text-[#b4ac8f] whitespace-nowrap">Ly PET Cao Cấp</th>
+                    <th className="p-6 font-display font-bold tracking-widest text-sm uppercase w-[20%] whitespace-nowrap">Ly Giấy</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-200/50 text-sm md:text-base">
@@ -102,7 +112,7 @@ export default function BangGiaPage() {
             </div>
           </div>
 
-          {/* LỜI KHUYÊN KHỞI NGHIỆP SECTION */}
+          {/* Lời khuyên section */}
           <div className="bg-[#1a1a1a] rounded-[2rem] p-8 md:p-12 lg:p-16 relative overflow-hidden flex flex-col md:flex-row gap-12 items-center">
             <div className="absolute top-0 right-0 p-8 opacity-10 pointer-events-none">
               <i className="fa-solid fa-lightbulb text-9xl text-white"></i>
@@ -116,29 +126,23 @@ export default function BangGiaPage() {
               
               <div className="flex flex-col gap-6">
                 <div className="flex items-start gap-4">
-                  <div className="w-8 h-8 rounded-full bg-[#6d8869] text-white flex items-center justify-center shrink-0 mt-1">
-                    1
-                  </div>
+                  <div className="w-8 h-8 rounded-full bg-[#6d8869] text-white flex items-center justify-center shrink-0 mt-1">1</div>
                   <p className="text-slate-300 leading-relaxed text-sm md:text-base">
-                    <strong className="text-white">Bán Trà Sữa / Quán bình dân ship mang đi:</strong> Lựa Chọn <strong>Ly Nhựa PP</strong> (Trơn hoặc đáy bầu). Ưu thế tối thượng là <strong>Ép Được Màng</strong> nilon, shipper chạy cỡ nào cũng không sợ đổ. Trữ vốn tối ưu lúc ban đầu.
+                    <strong className="text-white">Bán Trà Sữa / Quán bình dân ship mang đi:</strong> Lựa Chọn <strong>Ly Nhựa PP</strong> (Trơn hoặc đáy bầu). Ưu thế là <strong>Ép Được Màng</strong> nilon, shipper chạy cỡ nào cũng không sợ đổ.
                   </p>
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="w-8 h-8 rounded-full bg-[#f8eb96] text-[#1a1a1a] flex items-center justify-center shrink-0 mt-1">
-                    2
-                  </div>
+                  <div className="w-8 h-8 rounded-full bg-[#f8eb96] text-[#1a1a1a] flex items-center justify-center shrink-0 mt-1">2</div>
                   <p className="text-slate-300 leading-relaxed text-sm md:text-base">
-                    <strong className="text-white">Cà Phê Ủ Lạnh, Nước Ép Sang Chảnh:</strong> Đừng tiếc vài chục đồng, hãy chọn <strong>Ly Nhựa PET</strong>. Ly vô cùng cứng cáp và trong suốt, đi kèm Nắp Cầu, đảm bảo ly nước lên hình long lanh gọi mời khách hàng quay lại.
+                    <strong className="text-white">Cà Phê Ủ Lạnh, Nước Ép Sang Chảnh:</strong> Chọn <strong>Ly Nhựa PET</strong>. Trong suốt, cứng cáp, đi kèm Nắp Cầu — ly nước lên hình long lanh.
                   </p>
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="w-8 h-8 rounded-full bg-[#6d8869] text-white flex items-center justify-center shrink-0 mt-1">
-                    3
-                  </div>
+                  <div className="w-8 h-8 rounded-full bg-[#6d8869] text-white flex items-center justify-center shrink-0 mt-1">3</div>
                   <p className="text-slate-300 leading-relaxed text-sm md:text-base">
-                    <strong className="text-white">Trend Oganic / Cà Phê Nóng:</strong> Hãy ưu tiên <strong>Ly Giấy Kraft</strong>. Màu nâu trầm bảo vệ môi trường nâng tầm thương hiệu sống xanh ngay lấp tức cho doanh nghiệp F&B của bạn.
+                    <strong className="text-white">Trend Organic / Cà Phê Nóng:</strong> Ưu tiên <strong>Ly Giấy Kraft</strong>. Màu nâu trầm nâng tầm thương hiệu sống xanh cho doanh nghiệp F&B.
                   </p>
                 </div>
               </div>
