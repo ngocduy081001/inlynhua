@@ -24,37 +24,37 @@ export const metadata: Metadata = {
   // ── Core ──────────────────────────────────────────────────────────
   metadataBase: new URL(siteUrl),
   title: {
-    default: "In Ly Giá Rẻ | In Ly Nhựa Theo Yêu Cầu – Từ 1.000 Ly",
-    template: "%s | In Ly Giá Rẻ",
+    default: "In Ly Giá Rẻ HCM | In Ly Nhựa Theo Yêu Cầu TPHCM – Từ 1.000 Ly",
+    template: "%s | In Ly Giá Rẻ HCM",
   },
   description:
     "Dịch vụ in ly nhựa theo yêu cầu giá rẻ, chỉ từ 1.000 ly. In 1-4 màu CMYK, mẫu 3D miễn phí, giao hàng toàn quốc 1-5 ngày. Báo giá ngay – hotline 0396 505 693.",
   keywords: [
-    "in ly nhựa giá rẻ",
-    "in ly theo yêu cầu",
-    "in ly trà sữa",
-    "in ly cà phê",
-    "in bao bì nhựa",
-    "in CMYK",
-    "in ly 1000 cái",
-    "bao bì thương hiệu",
-    "in ấn giá rẻ HCM",
     "in ly nhựa tphcm",
+    "in ly nhựa hồ chí minh",
+    "in ly nhựa hcm",
+    "in ly nhựa giá rẻ tphcm",
+    "xưởng in ly nhựa hcm",
+    "in ly nhựa theo yêu cầu",
+    "in ly trà sữa hcm",
+    "in ly cà phê hcm",
+    "in bao bì nhựa hcm",
+    "in ấn giá rẻ HCM",
   ],
 
   // ── Canonical & Authors ───────────────────────────────────────────
   alternates: { canonical: siteUrl },
-  authors: [{ name: "In Ly Giá Rẻ", url: siteUrl }],
-  creator: "In Ly Giá Rẻ",
-  publisher: "In Ly Giá Rẻ",
+  authors: [{ name: "In Ly Giá Rẻ HCM", url: siteUrl }],
+  creator: "In Ly Giá Rẻ HCM",
+  publisher: "In Ly Giá Rẻ HCM",
 
   // ── Open Graph ────────────────────────────────────────────────────
   openGraph: {
     type: "website",
     locale: "vi_VN",
     url: siteUrl,
-    siteName: "In Ly Giá Rẻ",
-    title: "In Ly Giá Rẻ | In Ly Nhựa Theo Yêu Cầu – Từ 1.000 Ly",
+    siteName: "In Ly Giá Rẻ HCM",
+    title: "In Ly Giá Rẻ HCM | In Ly Nhựa Theo Yêu Cầu TPHCM – Từ 1.000 Ly",
     description:
       "In ly nhựa theo yêu cầu, giá rẻ, chỉ từ 1.000 ly. Thiết kế 3D miễn phí, giao hàng toàn quốc. Hotline: 0396 505 693.",
     images: [
@@ -62,7 +62,7 @@ export const metadata: Metadata = {
         url: `${siteUrl}/og-image.jpg`,
         width: 1200,
         height: 630,
-        alt: "In Ly Giá Rẻ – In Ly Nhựa Theo Yêu Cầu",
+        alt: "In Ly Giá Rẻ HCM – In Ly Nhựa Theo Yêu Cầu",
       },
     ],
   },
@@ -70,7 +70,7 @@ export const metadata: Metadata = {
   // ── Twitter Card ──────────────────────────────────────────────────
   twitter: {
     card: "summary_large_image",
-    title: "In Ly Giá Rẻ | In Ly Nhựa Theo Yêu Cầu",
+    title: "In Ly Giá Rẻ HCM | In Ly Nhựa Theo Yêu Cầu TPHCM",
     description: "In ly nhựa chỉ từ 1.000 cái. Thiết kế 3D miễn phí. Giao toàn quốc.",
     images: [`${siteUrl}/og-image.jpg`],
   },
