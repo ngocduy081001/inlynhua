@@ -42,7 +42,8 @@ export interface NavLink {
 export const navLinks: readonly NavLink[] = [
     { href: "/", label: "Trang chủ" },
     { href: "/#products", label: "Sản phẩm" },
-    { href: "/#pricing", label: "Bảng giá" },
+    { href: "/#pricing", label: "Bảng giá in" },
+    { href: "/bang-gia", label: "Bảng giá ly" },
     { href: "/#features", label: "Cam kết" },
     { href: "/tin-tuc", label: "Tin tức" },
     { href: "/studio", label: "Thiết kế" },

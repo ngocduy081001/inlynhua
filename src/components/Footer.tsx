@@ -18,7 +18,7 @@ export const Footer: React.FC<{ className?: string }> = ({ className = "" }) => 
           <div className="md:col-span-5 flex flex-col gap-6">
             <Link href="/" className="inline-flex items-center gap-3 pr-4">
               <span className="font-display font-light italic text-3xl tracking-wide text-[#f4f2eb]">
-                In Ly <span className="text-[#6d8869]">Giá Rẻ</span>
+                In Ly <span className="text-[#6d8869]">HCM</span>
               </span>
             </Link>
             <p className="text-sm border-l-2 border-slate-700 pl-4 text-slate-400 font-medium leading-relaxed max-w-sm">

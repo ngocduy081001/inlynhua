@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Be_Vietnam_Pro } from "next/font/google";
 import "./globals.css";
 import { QuoteProvider } from "@/context/QuoteContext";
+import { FloatingContact } from "@/components/FloatingContact";
 
 const beVietnamDisplay = Be_Vietnam_Pro({
   subsets: ["latin", "vietnamese"],
@@ -24,8 +25,8 @@ export const metadata: Metadata = {
   // ── Core ──────────────────────────────────────────────────────────
   metadataBase: new URL(siteUrl),
   title: {
-    default: "In Ly Giá Rẻ HCM | In Ly Nhựa Theo Yêu Cầu TPHCM – Từ 1.000 Ly",
-    template: "%s | In Ly Giá Rẻ HCM",
+    default: "In Ly Giá Rẻ | In Ly Nhựa Theo Yêu Cầu – Từ 1.000 Ly",
+    template: "%s | In Ly Giá Rẻ",
   },
   description:
     "Dịch vụ in ly nhựa theo yêu cầu giá rẻ, chỉ từ 1.000 ly. In 1-4 màu CMYK, mẫu 3D miễn phí, giao hàng toàn quốc 1-5 ngày. Báo giá ngay – hotline 0396 505 693.",
@@ -44,17 +45,17 @@ export const metadata: Metadata = {
 
   // ── Canonical & Authors ───────────────────────────────────────────
   alternates: { canonical: siteUrl },
-  authors: [{ name: "In Ly Giá Rẻ HCM", url: siteUrl }],
-  creator: "In Ly Giá Rẻ HCM",
-  publisher: "In Ly Giá Rẻ HCM",
+  authors: [{ name: "In Ly Giá Rẻ", url: siteUrl }],
+  creator: "In Ly Giá Rẻ",
+  publisher: "In Ly Giá Rẻ",
 
   // ── Open Graph ────────────────────────────────────────────────────
   openGraph: {
     type: "website",
     locale: "vi_VN",
     url: siteUrl,
-    siteName: "In Ly Giá Rẻ HCM",
-    title: "In Ly Giá Rẻ HCM | In Ly Nhựa Theo Yêu Cầu TPHCM – Từ 1.000 Ly",
+    siteName: "In Ly Giá Rẻ",
+    title: "In Ly Giá Rẻ | In Ly Nhựa Theo Yêu Cầu – Từ 1.000 Ly",
     description:
       "In ly nhựa theo yêu cầu, giá rẻ, chỉ từ 1.000 ly. Thiết kế 3D miễn phí, giao hàng toàn quốc. Hotline: 0396 505 693.",
     images: [
@@ -62,7 +63,7 @@ export const metadata: Metadata = {
         url: `${siteUrl}/og-image.jpg`,
         width: 1200,
         height: 630,
-        alt: "In Ly Giá Rẻ HCM – In Ly Nhựa Theo Yêu Cầu",
+        alt: "In Ly Giá Rẻ – In Ly Nhựa Theo Yêu Cầu",
       },
     ],
   },
@@ -70,7 +71,7 @@ export const metadata: Metadata = {
   // ── Twitter Card ──────────────────────────────────────────────────
   twitter: {
     card: "summary_large_image",
-    title: "In Ly Giá Rẻ HCM | In Ly Nhựa Theo Yêu Cầu TPHCM",
+    title: "In Ly Giá Rẻ | In Ly Nhựa Theo Yêu Cầu",
     description: "In ly nhựa chỉ từ 1.000 cái. Thiết kế 3D miễn phí. Giao toàn quốc.",
     images: [`${siteUrl}/og-image.jpg`],
   },
@@ -117,6 +118,7 @@ export default function RootLayout({
         <div className="pointer-events-none fixed inset-0 z-50 h-full w-full opacity-[0.035] mix-blend-overlay print-noise-texture"></div>
         <QuoteProvider>
           {children}
+          <FloatingContact />
         </QuoteProvider>
       </body>
     </html>

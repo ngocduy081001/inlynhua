@@ -20,23 +20,24 @@ export const HeroBanner = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative">
 
           {/* LEFT SIDE CONTENT */}
-          <div className="lg:col-span-4 flex flex-col items-start relative z-20">
+          <div className="lg:col-span-5 flex flex-col items-center lg:items-start text-center lg:text-left relative z-20 px-4 lg:px-0">
 
             <motion.h1
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
-              className="text-6xl md:text-8xl font-display font-light italic text-[#1a1a1a] tracking-widest leading-[1.2] mb-4 uppercase py-4"
+              className="text-4xl md:text-5xl lg:text-6xl font-display font-light italic text-[#1a1a1a] tracking-tight leading-[1.15] mb-6 uppercase py-2"
             >
-              In Ly <br />
-              Giá Rẻ
+              In Ly Nhựa <br />
+              <span className="font-bold text-[#6d8869]">Giá Rẻ</span> <br />
+              Tại TP.HCM
             </motion.h1>
 
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3, duration: 0.8 }}
-              className="text-sm border-l-2 border-slate-300 pl-4 py-1 text-slate-500 max-w-[280px] font-medium leading-relaxed mb-8"
+              className="text-sm border-l-2 border-slate-300 pl-4 py-1 text-slate-500 max-w-[280px] font-medium leading-relaxed mb-8 mx-auto lg:mx-0"
             >
               In theo yêu cầu chỉ từ 1.000 ly
             </motion.p>
@@ -55,14 +56,14 @@ export const HeroBanner = () => {
           </div>
 
           {/* CENTER/RIGHT PRODUCT DISPLAY area */}
-          <div className="lg:col-span-8 relative h-[600px] lg:h-[700px] flex items-center justify-center w-full z-10 mt-16 lg:mt-0">
+          <div className="lg:col-span-7 relative h-[400px] md:h-[500px] lg:h-[700px] flex items-center justify-center w-full z-10 mt-12 lg:mt-0">
 
             {/* Decorative text upper right - like reference */}
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.7, duration: 0.8 }}
-              className="absolute top-0 right-0 lg:right-10 text-right font-display font-bold text-[#b4ac8f] text-lg lg:text-2xl tracking-tight leading-snug z-0"
+              className="absolute -top-6 lg:top-0 right-2 lg:right-10 text-right font-display font-bold text-[#b4ac8f] text-lg md:text-xl lg:text-2xl tracking-tight leading-snug z-0"
             >
               Từ Ý Tưởng<br />
               Đến Tay Khách
@@ -78,14 +79,14 @@ export const HeroBanner = () => {
                 initial={{ opacity: 0, y: 80, rotate: -25 }}
                 animate={{ opacity: 1, y: 0, rotate: -15 }}
                 transition={{ duration: 1, delay: 0.9, type: "spring", bounce: 0.3 }}
-                className="absolute left-[5%] lg:left-[10%] top-[10%] lg:top-[5%] z-10 drop-shadow-2xl"
+                className="absolute left-[2%] lg:left-[5%] top-[15%] lg:top-[5%] z-10 drop-shadow-2xl w-[200px] md:w-[280px] lg:w-[350px]"
               >
                 <Image
                   src="/images/custom-hero-standard.png"
                   alt="Ly trà sữa"
                   width={350}
                   height={350}
-                  className="object-contain"
+                  className="object-contain w-full h-auto"
                   priority
                 />
               </motion.div>
@@ -95,14 +96,14 @@ export const HeroBanner = () => {
                 initial={{ opacity: 0, y: 100, rotate: 15 }}
                 animate={{ opacity: 1, y: 0, rotate: 5 }}
                 transition={{ duration: 1, delay: 1.1, type: "spring", bounce: 0.3 }}
-                className="absolute right-[5%] lg:right-[10%] top-[15%] lg:top-[10%] z-20 drop-shadow-[0_30px_40px_rgba(0,0,0,0.2)]"
+                className="absolute right-[2%] lg:right-[15%] top-[25%] lg:top-[10%] z-20 drop-shadow-[0_30px_40px_rgba(0,0,0,0.2)] w-[240px] md:w-[320px] lg:w-[400px]"
               >
                 <Image
                   src="/images/custom-hero-premium.png"
                   alt="Ly matcha cao cấp"
                   width={400}
                   height={400}
-                  className="object-contain"
+                  className="object-contain w-full h-auto"
                 />
               </motion.div>
 
@@ -113,16 +114,16 @@ export const HeroBanner = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.5, duration: 0.5, type: "spring", bounce: 0.4 }}
-              className="absolute bottom-14 lg:bottom-20 right-0 lg:right-4 z-30"
+              className="absolute bottom-14 lg:bottom-20 right-4 lg:right-4 z-30"
             >
               <a
                 href="tel:0396505693"
-                className="flex items-center gap-3 bg-[#1a1a1a] px-6 py-3.5 rounded-full shadow-lg hover:shadow-xl hover:bg-[#6d8869] transition-all duration-300 group"
+                className="flex items-center bg-[#1a1a1a] p-2 md:px-6 md:py-3.5 rounded-full shadow-lg hover:shadow-xl hover:bg-[#6d8869] transition-all duration-300 group"
               >
-                <span className="w-10 h-10 rounded-full bg-[#f8eb96] flex items-center justify-center text-[#1a1a1a] group-hover:bg-white transition-colors">
-                  <i className="fa-solid fa-phone text-sm" />
+                <span className="w-12 h-12 md:w-10 md:h-10 rounded-full bg-[#f8eb96] flex items-center justify-center text-[#1a1a1a] group-hover:bg-white transition-colors">
+                  <i className="fa-solid fa-phone text-lg md:text-sm" />
                 </span>
-                <div className="flex flex-col">
+                <div className="flex-col ml-3 hidden md:flex">
                   <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Hotline</span>
                   <span className="font-display font-black text-white text-lg tracking-tight">0396 505 693</span>
                 </div>

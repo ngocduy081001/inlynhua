@@ -9,9 +9,9 @@ import { Metadata } from "next";
 
 // Page-level metadata (overrides layout default for homepage)
 export const metadata: Metadata = {
-  title: "In Ly Nhựa TPHCM & Toàn Quốc | Xưởng In Ly Giá Rẻ HCM",
+  title: "In Ly Nhựa Giá Rẻ Theo Yêu Cầu | Từ 1.000 Ly – In Ly Giá Rẻ",
   description:
-    "Xưởng in ly nhựa theo yêu cầu tại Hồ Chí Minh (HCM). In ly trà sữa, in ly cà phê giá rẻ từ 1.200đ/ly, số lượng từ 1.000 ly. Giao tốc hành TPHCM. Hotline: 0396 505 693.",
+    "Chuyên in ly nhựa theo yêu cầu, in ly trà sữa, in ly cà phê giá rẻ từ 1.200đ/ly. Thiết kế 3D miễn phí, in CMYK chuẩn màu, giao hàng toàn quốc 1-5 ngày. Hotline: 0396 505 693.",
   alternates: {
     canonical: process.env.NEXT_PUBLIC_SITE_URL ?? "https://inlygiaRe.vn",
   },
@@ -37,7 +37,7 @@ const localBusinessSchema = {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
   name: "In Ly Giá Rẻ",
-  description: "Xưởng in ly nhựa tại Hồ Chí Minh (TPHCM). Dịch vụ in ly theo yêu cầu, in ly trà sữa, ly cafe giá rẻ toàn quốc.",
+  description: "Dịch vụ in ly nhựa theo yêu cầu, in ly trà sữa, in ly cà phê giá rẻ toàn quốc",
   url: siteUrl,
   telephone: "0396505693",
   image: `${siteUrl}/og-image.jpg`,

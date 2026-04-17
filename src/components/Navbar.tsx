@@ -38,7 +38,7 @@ export const Navbar: React.FC<{ className?: string }> = ({
           className="group flex flex-col items-start justify-center relative z-50 transition-transform hover:scale-105"
         >
           <span className="text-2xl md:text-3xl font-display font-black tracking-tighter text-[#1a1a1a] uppercase leading-none pt-1">
-            In Ly <span className="text-[#6d8869]">Giá Rẻ</span>
+            In Ly <span className="text-[#6d8869]">HCM</span>
           </span>
         </Link>
 
