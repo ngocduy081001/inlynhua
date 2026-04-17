@@ -49,10 +49,11 @@ export function PricingCalculator() {
 
   const { unitPrice, totalPrice, cupCost, printCost } = useMemo(() => {
     // 1. Giá vỏ ly (từ PDF Uy Kiệt)
-    const cup = cupCostPerUnit[cupType]?.[volume] || 506;
+    const typeMap = cupCostPerUnit[cupType as keyof typeof cupCostPerUnit];
+    const cup = typeMap?.[volume as keyof typeof typeMap] || 506;
 
     // 2. Giá in ấn (từ bảng giá trang chủ)
-    const print = printCostPerUnit[quantity] || 120;
+    const print = printCostPerUnit[quantity as keyof typeof printCostPerUnit] || 150;
 
     // 3. Tổng đơn giá = ly + in
     const unit = cup + print;
