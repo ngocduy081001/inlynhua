@@ -64,7 +64,7 @@ export async function generateMetadata(
     return {
       title,
       description: staticPost.excerpt,
-      keywords: staticPost.tags,
+      keywords: [...staticPost.tags],
       alternates: { canonical: canonicalUrl },
       authors: [{ name: staticPost.author.name }],
       openGraph: {
