@@ -1,9 +1,18 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 @theme {
   --font-display: var(--font-display), "Be Vietnam Pro", "sans-serif";
   --font-body: var(--font-body), "Be Vietnam Pro", "sans-serif";
   --font-mono: "ui-monospace", "SFMono-Regular", "Menlo", "Monaco", "Consolas", "Liberation Mono", "Courier New", "monospace";
+  
+  /* Brand prose overrides */
+  --tw-prose-links: #6d8869;
+  --tw-prose-headings: #1a1a1a;
+  --tw-prose-bold: #1a1a1a;
+  --tw-prose-quotes: #6d8869;
+  --tw-prose-quote-borders: #6d8869;
+  --tw-prose-bullets: #6d8869;
 }
 
 /* Base Light Theme */

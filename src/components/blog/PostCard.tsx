@@ -16,7 +16,7 @@ export const PostCard: React.FC<PostCardProps> = ({
   if (variant === "horizontal") {
     return (
       <Link
-        href={`/blog/${post.slug}`}
+      href={`/${post.slug}`}
         className="group flex gap-4 p-3 rounded-xl hover:bg-[#f4f2eb] transition-all duration-300"
       >
         {/* Thumbnail */}
@@ -47,7 +47,7 @@ export const PostCard: React.FC<PostCardProps> = ({
 
   return (
     <Link
-      href={`/blog/${post.slug}`}
+      href={`/tin-tuc/${post.slug}`}
       className="group block rounded-2xl md:rounded-[2rem] overflow-hidden bg-white shadow-sm hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] hover:-translate-y-2 transition-all duration-500"
     >
       {/* Image */}

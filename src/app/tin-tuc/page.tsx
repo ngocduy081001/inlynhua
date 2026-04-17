@@ -6,17 +6,52 @@ import { CategoryCard } from "@/components/blog/CategoryCard";
 import { BlogSidebar } from "@/components/blog/BlogSidebar";
 import Image from "next/image";
 import Link from "next/link";
+import { Metadata } from "next";
 import {
   blogPosts,
   categories,
   getFeaturedPosts,
 } from "@/data/blogData";
 
-export const metadata = {
-  title: "Tin tức | In Ly Nhựa Giá Rẻ",
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://inlygiaRe.vn";
+
+export const metadata: Metadata = {
+  title: "Tin Tức In Ấn | Kiến Thức In Ly Nhựa, Bao Bì Thương Hiệu",
   description:
-    "Cập nhật xu hướng in ấn, thiết kế 3D, công nghệ VR và kiến thức thương hiệu mới nhất.",
+    "Cập nhật xu hướng in ấn, kiến thức thiết kế bao bì, case study thực tế. Hướng dẫn chọn in ly nhựa đúng chất lượng, đúng giá cho quán trà sữa, cà phê.",
+  keywords: [
+    "tin tức in ấn",
+    "kiến thức in ly nhựa",
+    "xu hướng bao bì 2026",
+    "thiết kế 3D bao bì",
+    "in ly trà sữa",
+    "case study in ấn",
+  ],
+  alternates: { canonical: `${siteUrl}/blog` },
+  openGraph: {
+    title: "Tin Tức In Ấn | In Ly Giá Rẻ",
+    description: "Xu hướng in ấn, kiến thức bao bì, case study thực tế từ đội ngũ In Ly Giá Rẻ.",
+    url: `${siteUrl}/blog`,
+    siteName: "In Ly Giá Rẻ",
+    type: "website",
+    images: [{ url: `${siteUrl}/images/blog/packaging-trends.png`, width: 1200, height: 630, alt: "Tin tức in ấn" }],
+  },
 };
+
+// JSON-LD Blog schema
+const blogSchema = {
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  name: "Blog In Ly Giá Rẻ",
+  description: "Tin tức, kiến thức và xu hướng ngành in ấn bao bì",
+  url: `${siteUrl}/blog`,
+  publisher: {
+    "@type": "Organization",
+    name: "In Ly Giá Rẻ",
+    logo: { "@type": "ImageObject", url: `${siteUrl}/images/logo.png` },
+  },
+};
+
 
 export default function BlogPage() {
   const featuredPosts = getFeaturedPosts();
@@ -24,6 +59,10 @@ export default function BlogPage() {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(blogSchema) }}
+      />
       <Navbar />
       <main className="min-h-screen bg-[#f4f2eb]">
         {/* ─── Hero Banner with Image ─── */}
@@ -42,25 +81,23 @@ export default function BlogPage() {
             {/* Content overlay */}
             <div className="absolute inset-0 flex items-end">
               <div className="w-full max-w-[1400px] mx-auto px-6 md:px-12 pb-10 md:pb-14">
-                {/* Breadcrumb */}
-                <nav className="flex items-center gap-2 text-sm text-slate-500 mb-4">
-                  <Link href="/" className="hover:text-[#6d8869] transition-colors">
-                    Trang chủ
-                  </Link>
-                  <span className="text-slate-400">/</span>
-                  <span className="text-[#6d8869] font-medium">Tin tức</span>
-                </nav>
-
                 <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
                   <div>
-                    <p className="text-xs text-[#6d8869] font-bold tracking-widest uppercase mb-3">
+                    <nav className="flex items-center gap-2.5 text-[15px] md:text-base font-medium mb-3">
+                      <Link href="/" className="text-[#647b93] hover:text-[#6d8869] transition-colors">
+                        Trang chủ
+                      </Link>
+                      <span className="text-[#647b93] font-light">/</span>
+                      <span className="text-[#6d8869]">Tin tức</span>
+                    </nav>
+                    <p className="text-sm md:text-[15px] text-[#6d8869] font-bold tracking-[0.15em] uppercase mb-1">
                       Tin tức & Góc chia sẻ
                     </p>
-                    <h1 className="font-display font-light italic text-4xl md:text-5xl lg:text-6xl text-[#1a1a1a] tracking-wide leading-[1.15]">
+                    <h1 className="font-display font-light italic text-6xl md:text-8xl lg:text-[110px] text-[#1a1a1a] tracking-wider leading-none">
                       Tin tức
                     </h1>
                   </div>
-                  <p className="text-sm text-slate-500 font-medium leading-relaxed max-w-sm border-l-2 border-slate-300 pl-4">
+                  <p className="text-sm border-l-2 border-slate-300 pl-4 py-1 text-slate-500 font-medium leading-relaxed max-w-sm">
                     Cập nhật xu hướng, chia sẻ kiến thức và khám phá công nghệ in ấn mới nhất.
                   </p>
                 </div>
@@ -69,15 +106,15 @@ export default function BlogPage() {
           </div>
 
           {/* Search bar */}
-          <div className="max-w-[1400px] mx-auto px-6 md:px-12 -mt-6 relative z-10">
-            <div className="flex items-center bg-white rounded-full px-5 py-3 shadow-md max-w-lg">
-              <i className="fa-solid fa-search text-slate-400 mr-3 text-sm" />
+          <div className="max-w-[1400px] mx-auto px-6 md:px-12 -mt-8 relative z-10 flex justify-center">
+            <div className="flex items-center bg-white rounded-full px-5 py-3 shadow-[0_8px_30px_rgb(0,0,0,0.08)] w-full max-w-4xl hover:shadow-[0_12px_40px_rgb(0,0,0,0.12)] transition-all duration-300">
+              <i className="fa-solid fa-search text-slate-400 mr-4 text-base" />
               <input
                 type="text"
                 placeholder="Tìm kiếm bài viết..."
-                className="w-full bg-transparent text-[#1a1a1a] placeholder:text-slate-400 outline-none text-sm"
+                className="w-full bg-transparent text-[#1a1a1a] placeholder:text-slate-400 outline-none text-base"
               />
-              <button className="ml-3 px-5 py-2 bg-[#1a1a1a] hover:bg-[#6d8869] text-[#f4f2eb] text-xs font-bold rounded-full transition-colors tracking-wider uppercase whitespace-nowrap">
+              <button className="ml-3 px-8 py-3 bg-[#1a1a1a] hover:bg-[#6d8869] text-[#f4f2eb] text-sm font-bold rounded-full transition-colors tracking-widest uppercase whitespace-nowrap">
                 Tìm
               </button>
             </div>

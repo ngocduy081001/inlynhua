@@ -58,7 +58,7 @@ export const HeroBanner = () => {
           <div className="lg:col-span-8 relative h-[600px] lg:h-[700px] flex items-center justify-center w-full z-10 mt-16 lg:mt-0">
 
             {/* Decorative text upper right - like reference */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.7, duration: 0.8 }}
@@ -109,7 +109,7 @@ export const HeroBanner = () => {
             </div>
 
             {/* Contact CTA - phone */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.5, duration: 0.5, type: "spring", bounce: 0.4 }}

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { navLinks } from "@/data/mockData";
 import { useMobileMenu } from "@/hooks/useMobileMenu";
+import { useQuote } from "@/context/QuoteContext";
 
 export const Navbar: React.FC<{ className?: string }> = ({
   className = "",
@@ -11,6 +12,7 @@ export const Navbar: React.FC<{ className?: string }> = ({
   const { isOpen: isMobileMenuOpen, toggle: toggleMobileMenu, close: closeMobileMenu } =
     useMobileMenu();
   const [scrolled, setScrolled] = useState(false);
+  const { openQuote } = useQuote();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -55,12 +57,12 @@ export const Navbar: React.FC<{ className?: string }> = ({
 
         {/* Action Button & Mobile Toggle */}
         <div className="flex items-center gap-4 relative z-50">
-          <Link
-            href="/#contact"
+          <button
+            onClick={() => openQuote()}
             className="hidden lg:inline-flex items-center justify-center px-8 py-3 rounded-full bg-[#1a1a1a] text-[#f4f2eb] text-sm font-bold tracking-widest uppercase hover:bg-[#6d8869] hover:text-white transition-all duration-300"
           >
             Báo giá
-          </Link>
+          </button>
 
           {/* Hamburger */}
           <button
@@ -110,13 +112,12 @@ export const Navbar: React.FC<{ className?: string }> = ({
                 transition={{ delay: navLinks.length * 0.1 + 0.3 }}
                 className="mt-8"
               >
-                <Link
-                  href="/#contact"
-                  onClick={closeMobileMenu}
+                <button
+                  onClick={() => { closeMobileMenu(); openQuote(); }}
                   className="px-10 py-4 rounded-full bg-[#1a1a1a] text-[#f4f2eb] font-bold text-lg uppercase tracking-widest hover:bg-[#6d8869] transition-colors"
                 >
                   Nhận báo giá ngay
-                </Link>
+                </button>
               </motion.div>
             </nav>
           </motion.div>

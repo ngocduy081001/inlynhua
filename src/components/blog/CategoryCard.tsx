@@ -9,7 +9,7 @@ interface CategoryCardProps {
 export const CategoryCard: React.FC<CategoryCardProps> = ({ category }) => {
   return (
     <Link
-      href={`/blog/chuyen-muc/${category.slug}`}
+      href={`/tin-tuc/chuyen-muc/${category.slug}`}
       className="group relative flex flex-col items-start p-8 bg-white rounded-2xl md:rounded-[2rem] shadow-sm hover:shadow-[0_20px_40px_rgba(0,0,0,0.06)] hover:-translate-y-2 transition-all duration-500"
     >
       {/* Icon Box */}

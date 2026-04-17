@@ -11,7 +11,7 @@ interface FeaturedPostProps {
 export const FeaturedPost: React.FC<FeaturedPostProps> = ({ post }) => {
   return (
     <Link
-      href={`/blog/${post.slug}`}
+      href={`/${post.slug}`}
       className="group block relative overflow-hidden rounded-2xl md:rounded-[2rem] bg-white shadow-sm hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] transition-all duration-500"
     >
       <div className="grid md:grid-cols-2 gap-0">

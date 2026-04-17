@@ -19,7 +19,7 @@ export const BlogSidebar: React.FC = () => {
           {categories.map((cat) => (
             <Link
               key={cat.id}
-              href={`/blog/chuyen-muc/${cat.slug}`}
+              href={`/tin-tuc/chuyen-muc/${cat.slug}`}
               className="group flex items-center justify-between px-3 py-2.5 rounded-xl hover:bg-[#f4f2eb] transition-all duration-200"
             >
               <div className="flex items-center gap-3">
@@ -74,7 +74,7 @@ export const BlogSidebar: React.FC = () => {
           ].map((tag) => (
             <Link
               key={tag}
-              href={`/blog?tag=${tag}`}
+              href={`/tin-tuc?tag=${tag}`}
               className="px-3 py-1.5 text-xs font-bold text-slate-500 bg-[#f4f2eb] hover:bg-[#1a1a1a] hover:text-[#f8eb96] rounded-full transition-all duration-200"
             >
               #{tag}

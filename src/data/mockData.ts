@@ -42,8 +42,9 @@ export interface NavLink {
 export const navLinks: readonly NavLink[] = [
     { href: "/", label: "Trang chủ" },
     { href: "/#products", label: "Sản phẩm" },
+    { href: "/#pricing", label: "Bảng giá" },
     { href: "/#features", label: "Cam kết" },
-    { href: "/blog", label: "Tin tức" },
+    { href: "/tin-tuc", label: "Tin tức" },
     { href: "/studio", label: "Thiết kế" },
 ];
 
@@ -186,9 +187,11 @@ export interface PantoneColor {
 }
 
 export const pantoneColors: readonly PantoneColor[] = [
-    { tailwindClass: "bg-cyan-500", label: "Cyan" },
-    { tailwindClass: "bg-white", label: "White" },
-    { tailwindClass: "bg-slate-800", label: "Dark" },
+    { tailwindClass: "bg-[#1a1a1a]", label: "Đen In" },
+    { tailwindClass: "bg-[#6d8869]", label: "Xanh Sage" },
+    { tailwindClass: "bg-[#f8eb96]", label: "Vàng Nắng" },
+    { tailwindClass: "bg-white border border-slate-200", label: "Trắng" },
+    { tailwindClass: "bg-[#f4f2eb]", label: "Kem" },
 ];
 
 // === QUANTITY OPTIONS ===

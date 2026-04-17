@@ -61,7 +61,7 @@ export default async function CategoryPage({
                 Trang chủ
               </Link>
               <span className="text-slate-300">/</span>
-              <Link href="/blog" className="hover:text-[#6d8869] transition-colors">
+              <Link href="/tin-tuc" className="hover:text-[#6d8869] transition-colors">
                 Blog
               </Link>
               <span className="text-slate-300">/</span>
@@ -93,7 +93,7 @@ export default async function CategoryPage({
               {categories.map((cat) => (
                 <Link
                   key={cat.id}
-                  href={`/blog/chuyen-muc/${cat.slug}`}
+                  href={`/tin-tuc/chuyen-muc/${cat.slug}`}
                   className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-widest transition-all duration-300 ${cat.slug === slug
                       ? "bg-[#1a1a1a] text-[#f8eb96]"
                       : "bg-white text-slate-500 hover:bg-[#1a1a1a] hover:text-[#f8eb96] shadow-sm"

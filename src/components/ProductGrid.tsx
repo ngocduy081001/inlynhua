@@ -52,7 +52,7 @@ export const ProductGrid = () => {
               key={idx}
               className="group bg-white rounded-2xl md:rounded-[2rem] p-4 md:p-6 flex flex-col hover:-translate-y-3 transition-all duration-500 overflow-hidden relative shadow-sm hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)]"
             >
-              <div className="relative w-full aspect-square mb-4 md:mb-6 flex items-center justify-center p-2 md:p-4 bg-transparent">
+              <div className="relative w-full aspect-square mb-4 md:mb-6 flex items-center justify-center  bg-transparent">
                 <Image
                   src={product.image}
                   alt={product.name}
@@ -71,7 +71,7 @@ export const ProductGrid = () => {
                     {product.specs}
                   </p>
                 </div>
-                
+
                 <button className="w-9 h-9 md:w-11 md:h-11 rounded-full bg-[#f4f2eb] flex items-center justify-center text-[#1a1a1a] font-bold group-hover:bg-[#1a1a1a] group-hover:text-[#f8eb96] transition-colors shrink-0 text-base md:text-lg">
                   +
                 </button>
