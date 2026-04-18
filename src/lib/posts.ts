@@ -1,9 +1,9 @@
 /**
- * lib/posts.ts — Blog storage layer backed by SQLite
- * Thay thế file JSON bằng DB thật (better-sqlite3)
+ * lib/posts.ts — Blog storage layer backed by MySQL
  */
-import { getDb } from "@/lib/db";
+import { getPool, initSchema } from "@/lib/db";
 import { categories } from "@/data/blogData";
+import { RowDataPacket } from "mysql2";
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
 export interface PostAuthor {
@@ -38,6 +38,14 @@ export interface Post {
   isFeatured?: boolean;
 }
 
+// Ensure table exists on first call
+let _initialized = false;
+async function ensureInit() {
+  if (_initialized) return;
+  await initSchema();
+  _initialized = true;
+}
+
 // ─── DB Row → Post ──────────────────────────────────────────────────────────────
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function rowToPost(row: any): Post {
@@ -53,12 +61,12 @@ function rowToPost(row: any): Post {
     excerpt: row.excerpt,
     thumbnail: row.thumbnail,
     categorySlug: row.category_slug,
-    tags: JSON.parse(row.tags ?? "[]"),
+    tags: typeof row.tags === "string" ? JSON.parse(row.tags) : (row.tags ?? []),
     metaTitle: row.meta_title,
     metaDescription: row.meta_description,
     canonicalUrl: row.canonical_url ?? undefined,
     focusKeyword: row.focus_keyword,
-    keywords: JSON.parse(row.keywords ?? "[]"),
+    keywords: typeof row.keywords === "string" ? JSON.parse(row.keywords) : (row.keywords ?? []),
     ogTitle: row.og_title ?? undefined,
     ogDescription: row.og_description ?? undefined,
     ogImage: row.og_image ?? undefined,
@@ -73,137 +81,108 @@ function rowToPost(row: any): Post {
 }
 
 // ─── CRUD ───────────────────────────────────────────────────────────────────────
-export function getAllPosts(): Post[] {
-  const db = getDb();
-  const rows = db.prepare("SELECT * FROM posts ORDER BY created_at DESC").all();
+export async function getAllPosts(): Promise<Post[]> {
+  await ensureInit();
+  const pool = getPool();
+  const [rows] = await pool.execute<RowDataPacket[]>("SELECT * FROM posts ORDER BY created_at DESC");
   return rows.map(rowToPost);
 }
 
-export function getPublishedPosts(): Post[] {
-  const db = getDb();
-  const rows = db
-    .prepare("SELECT * FROM posts WHERE status = 'published' ORDER BY published_at DESC, created_at DESC")
-    .all();
+export async function getPublishedPosts(): Promise<Post[]> {
+  await ensureInit();
+  const pool = getPool();
+  const [rows] = await pool.execute<RowDataPacket[]>(
+    "SELECT * FROM posts WHERE status = 'published' ORDER BY published_at DESC, created_at DESC"
+  );
   return rows.map(rowToPost);
 }
 
-export function getPostBySlug(slug: string): Post | undefined {
-  const db = getDb();
-  const row = db.prepare("SELECT * FROM posts WHERE slug = ?").get(slug);
-  return row ? rowToPost(row) : undefined;
+export async function getPostBySlug(slug: string): Promise<Post | undefined> {
+  await ensureInit();
+  const pool = getPool();
+  const [rows] = await pool.execute<RowDataPacket[]>("SELECT * FROM posts WHERE slug = ?", [slug]);
+  return rows[0] ? rowToPost(rows[0]) : undefined;
 }
 
-export function createPost(data: Omit<Post, "id" | "createdAt" | "updatedAt">): Post {
-  const db = getDb();
+export async function createPost(data: Omit<Post, "id" | "createdAt" | "updatedAt">): Promise<Post> {
+  await ensureInit();
+  const pool = getPool();
 
   // Validate slug uniqueness
-  const existing = db.prepare("SELECT id FROM posts WHERE slug = ?").get(data.slug);
-  if (existing) throw new Error(`Slug "${data.slug}" đã tồn tại`);
+  const [existing] = await pool.execute<RowDataPacket[]>("SELECT id FROM posts WHERE slug = ?", [data.slug]);
+  if (existing.length > 0) throw new Error(`Slug "${data.slug}" đã tồn tại`);
 
   const now = new Date().toISOString();
   const id = `post_${Date.now()}`;
   const publishedAt = data.status === "published" ? (data.publishedAt ?? now) : null;
 
-  db.prepare(`
-    INSERT INTO posts (
+  await pool.execute(
+    `INSERT INTO posts (
       id, title, slug, status, content, excerpt, thumbnail,
       category_slug, tags, meta_title, meta_description, canonical_url,
       focus_keyword, keywords, og_title, og_description, og_image,
       author_name, author_role, author_avatar, read_time, is_featured,
       created_at, updated_at, published_at
-    ) VALUES (
-      @id, @title, @slug, @status, @content, @excerpt, @thumbnail,
-      @category_slug, @tags, @meta_title, @meta_description, @canonical_url,
-      @focus_keyword, @keywords, @og_title, @og_description, @og_image,
-      @author_name, @author_role, @author_avatar, @read_time, @is_featured,
-      @created_at, @updated_at, @published_at
-    )
-  `).run({
-    id,
-    title: data.title,
-    slug: data.slug,
-    status: data.status,
-    content: data.content,
-    excerpt: data.excerpt,
-    thumbnail: data.thumbnail,
-    category_slug: data.categorySlug,
-    tags: JSON.stringify(data.tags),
-    meta_title: data.metaTitle,
-    meta_description: data.metaDescription,
-    canonical_url: data.canonicalUrl ?? null,
-    focus_keyword: data.focusKeyword,
-    keywords: JSON.stringify(data.keywords),
-    og_title: data.ogTitle ?? null,
-    og_description: data.ogDescription ?? null,
-    og_image: data.ogImage ?? null,
-    author_name: data.author.name,
-    author_role: data.author.role ?? null,
-    author_avatar: data.author.avatar ?? null,
-    read_time: data.readTime,
-    is_featured: data.isFeatured ? 1 : 0,
-    created_at: now,
-    updated_at: now,
-    published_at: publishedAt,
-  });
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    [
+      id, data.title, data.slug, data.status, data.content, data.excerpt, data.thumbnail,
+      data.categorySlug, JSON.stringify(data.tags), data.metaTitle, data.metaDescription, data.canonicalUrl ?? null,
+      data.focusKeyword, JSON.stringify(data.keywords), data.ogTitle ?? null, data.ogDescription ?? null, data.ogImage ?? null,
+      data.author.name, data.author.role ?? null, data.author.avatar ?? null, data.readTime, data.isFeatured ? 1 : 0,
+      now, now, publishedAt,
+    ]
+  );
 
-  return getPostBySlug(data.slug)!;
+  const post = await getPostBySlug(data.slug);
+  if (!post) throw new Error("Failed to create post");
+  return post;
 }
 
-export function updatePost(id: string, data: Partial<Post>): Post {
-  const db = getDb();
-  const existing = db.prepare("SELECT * FROM posts WHERE id = ?").get(id);
-  if (!existing) throw new Error("Bài viết không tồn tại");
+export async function updatePost(id: string, data: Partial<Post>): Promise<Post> {
+  await ensureInit();
+  const pool = getPool();
 
-  const current = rowToPost(existing);
+  const [existingRows] = await pool.execute<RowDataPacket[]>("SELECT * FROM posts WHERE id = ?", [id]);
+  if (existingRows.length === 0) throw new Error("Bài viết không tồn tại");
+
+  const current = rowToPost(existingRows[0]);
   const now = new Date().toISOString();
   const publishedAt =
     data.status === "published" && !current.publishedAt
       ? now
       : (data.publishedAt ?? current.publishedAt ?? null);
 
-  db.prepare(`
-    UPDATE posts SET
-      title = @title, slug = @slug, status = @status,
-      content = @content, excerpt = @excerpt, thumbnail = @thumbnail,
-      category_slug = @category_slug, tags = @tags,
-      meta_title = @meta_title, meta_description = @meta_description,
-      canonical_url = @canonical_url, focus_keyword = @focus_keyword,
-      keywords = @keywords, og_title = @og_title, og_description = @og_description,
-      og_image = @og_image, author_name = @author_name, author_role = @author_role,
-      read_time = @read_time, is_featured = @is_featured,
-      updated_at = @updated_at, published_at = @published_at
-    WHERE id = @id
-  `).run({
-    id,
-    title: data.title ?? current.title,
-    slug: data.slug ?? current.slug,
-    status: data.status ?? current.status,
-    content: data.content ?? current.content,
-    excerpt: data.excerpt ?? current.excerpt,
-    thumbnail: data.thumbnail ?? current.thumbnail,
-    category_slug: data.categorySlug ?? current.categorySlug,
-    tags: JSON.stringify(data.tags ?? current.tags),
-    meta_title: data.metaTitle ?? current.metaTitle,
-    meta_description: data.metaDescription ?? current.metaDescription,
-    canonical_url: data.canonicalUrl ?? current.canonicalUrl ?? null,
-    focus_keyword: data.focusKeyword ?? current.focusKeyword,
-    keywords: JSON.stringify(data.keywords ?? current.keywords),
-    og_title: data.ogTitle ?? current.ogTitle ?? null,
-    og_description: data.ogDescription ?? current.ogDescription ?? null,
-    og_image: data.ogImage ?? current.ogImage ?? null,
-    author_name: data.author?.name ?? current.author.name,
-    author_role: data.author?.role ?? current.author.role ?? null,
-    read_time: data.readTime ?? current.readTime,
-    is_featured: (data.isFeatured ?? current.isFeatured) ? 1 : 0,
-    updated_at: now,
-    published_at: publishedAt ?? null,
-  });
+  await pool.execute(
+    `UPDATE posts SET
+      title = ?, slug = ?, status = ?, content = ?, excerpt = ?, thumbnail = ?,
+      category_slug = ?, tags = ?, meta_title = ?, meta_description = ?,
+      canonical_url = ?, focus_keyword = ?, keywords = ?, og_title = ?, og_description = ?,
+      og_image = ?, author_name = ?, author_role = ?, read_time = ?, is_featured = ?,
+      updated_at = ?, published_at = ?
+    WHERE id = ?`,
+    [
+      data.title ?? current.title, data.slug ?? current.slug, data.status ?? current.status,
+      data.content ?? current.content, data.excerpt ?? current.excerpt, data.thumbnail ?? current.thumbnail,
+      data.categorySlug ?? current.categorySlug, JSON.stringify(data.tags ?? current.tags),
+      data.metaTitle ?? current.metaTitle, data.metaDescription ?? current.metaDescription,
+      data.canonicalUrl ?? current.canonicalUrl ?? null, data.focusKeyword ?? current.focusKeyword,
+      JSON.stringify(data.keywords ?? current.keywords), data.ogTitle ?? current.ogTitle ?? null,
+      data.ogDescription ?? current.ogDescription ?? null, data.ogImage ?? current.ogImage ?? null,
+      data.author?.name ?? current.author.name, data.author?.role ?? current.author.role ?? null,
+      data.readTime ?? current.readTime, (data.isFeatured ?? current.isFeatured) ? 1 : 0,
+      now, publishedAt ?? null, id,
+    ]
+  );
 
-  return getPostBySlug(data.slug ?? current.slug)!;
+  const post = await getPostBySlug(data.slug ?? current.slug);
+  if (!post) throw new Error("Failed to update post");
+  return post;
 }
 
-export function deletePost(id: string): void {
-  getDb().prepare("DELETE FROM posts WHERE id = ?").run(id);
+export async function deletePost(id: string): Promise<void> {
+  await ensureInit();
+  const pool = getPool();
+  await pool.execute("DELETE FROM posts WHERE id = ?", [id]);
 }
 
 // ─── Helpers ───────────────────────────────────────────────────────────────────

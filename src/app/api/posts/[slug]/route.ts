@@ -15,7 +15,7 @@ export async function GET(
   { params }: { params: Promise<{ slug: string }> }
 ) {
   const { slug } = await params;
-  const post = getPostBySlug(slug);
+  const post = await getPostBySlug(slug);
   if (!post) return NextResponse.json({ error: "Không tìm thấy" }, { status: 404 });
   return NextResponse.json(post);
 }
@@ -30,7 +30,7 @@ export async function PUT(
   }
 
   const { slug } = await params;
-  const post = getPostBySlug(slug);
+  const post = await getPostBySlug(slug);
   if (!post) return NextResponse.json({ error: "Không tìm thấy" }, { status: 404 });
 
   try {
@@ -41,13 +41,13 @@ export async function PUT(
 
     // Check slug uniqueness if slug is being changed
     if (body.slug && body.slug !== post.slug) {
-      const allPosts = getAllPosts();
+      const allPosts = await getAllPosts();
       if (allPosts.some((p) => p.slug === body.slug && p.id !== post.id)) {
         return NextResponse.json({ error: `Slug "${body.slug}" đã tồn tại` }, { status: 400 });
       }
     }
 
-    const updated = updatePost(post.id, { ...body, readTime });
+    const updated = await updatePost(post.id, { ...body, readTime });
     return NextResponse.json(updated);
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : "Lỗi không xác định";
@@ -65,9 +65,9 @@ export async function DELETE(
   }
 
   const { slug } = await params;
-  const post = getPostBySlug(slug);
+  const post = await getPostBySlug(slug);
   if (!post) return NextResponse.json({ error: "Không tìm thấy" }, { status: 404 });
 
-  deletePost(post.id);
+  await deletePost(post.id);
   return NextResponse.json({ success: true });
 }

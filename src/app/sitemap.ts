@@ -3,10 +3,9 @@
  * Bao gồm: trang chủ, tin tức, tất cả bài viết, chuyên mục
  */
 import { MetadataRoute } from "next";
-import { getPublishedPosts } from "@/lib/posts";
 import { blogPosts, categories } from "@/data/blogData";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://inlygiaRe.vn";
   const now = new Date();
 
@@ -30,6 +29,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 0.8,
     },
+    {
+      url: `${siteUrl}/bang-gia`,
+      lastModified: now,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
   ];
 
   // Category pages
@@ -40,7 +45,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  // Static blog posts — URLs at root (/{slug})
+  // Static blog posts
   const staticPostPages: MetadataRoute.Sitemap = blogPosts.map((post) => ({
     url: `${siteUrl}/${post.slug}`,
     lastModified: new Date(post.publishedAt),
@@ -48,14 +53,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: post.isFeatured ? 0.8 : 0.6,
   }));
 
-  // Dynamic posts (từ SQLite DB) — URLs at root (/{slug})
-  const dynamicPosts = getPublishedPosts();
-  const dynamicPostPages: MetadataRoute.Sitemap = dynamicPosts.map((post) => ({
-    url: `${siteUrl}/${post.slug}`,
-    lastModified: new Date(post.updatedAt),
-    changeFrequency: "monthly" as const,
-    priority: post.isFeatured ? 0.8 : 0.6,
-  }));
+  // Dynamic posts (SQLite) — skip if DB unavailable
+  let dynamicPostPages: MetadataRoute.Sitemap = [];
+  try {
+    const { getPublishedPosts } = await import("@/lib/posts");
+    const dynamicPosts = await getPublishedPosts();
+    dynamicPostPages = dynamicPosts.map((post) => ({
+      url: `${siteUrl}/${post.slug}`,
+      lastModified: new Date(post.updatedAt),
+      changeFrequency: "monthly" as const,
+      priority: post.isFeatured ? 0.8 : 0.6,
+    }));
+  } catch {
+    // SQLite / better-sqlite3 not available on production — skip
+  }
 
   return [...staticPages, ...categoryPages, ...staticPostPages, ...dynamicPostPages];
 }

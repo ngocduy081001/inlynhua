@@ -10,6 +10,6 @@ export async function GET(req: NextRequest) {
   const slug = searchParams.get("slug");
   if (!slug) return NextResponse.json({ available: false, error: "Thiếu slug" }, { status: 400 });
 
-  const existing = getPostBySlug(slug);
+  const existing = await getPostBySlug(slug);
   return NextResponse.json({ available: !existing, slug });
 }

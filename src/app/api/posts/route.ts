@@ -9,7 +9,7 @@ import { getAllPosts, createPost, generateSlug, estimateReadTime } from "@/lib/p
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const admin = searchParams.get("admin") === "1";
-  const posts = getAllPosts();
+  const posts = await getAllPosts();
   const result = admin ? posts : posts.filter((p) => p.status === "published");
   return NextResponse.json(result);
 }
@@ -29,7 +29,7 @@ export async function POST(req: NextRequest) {
     const slug = body.slug?.trim() || generateSlug(body.title);
     const readTime = estimateReadTime(body.content);
 
-    const post = createPost({
+    const post = await createPost({
       title: body.title.trim(),
       slug,
       status: body.status ?? "draft",

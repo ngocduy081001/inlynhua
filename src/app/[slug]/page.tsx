@@ -13,7 +13,7 @@ import { getCategoryBySlug, formatDate, blogPosts } from "@/data/blogData";
 
 // ─── Static Params ────────────────────────────────────────────────────────────
 export async function generateStaticParams() {
-  const dynamicPosts = getPublishedPosts();
+  const dynamicPosts = await getPublishedPosts();
   const staticSlugs = blogPosts.map((p) => ({ slug: p.slug }));
   const dynamicSlugs = dynamicPosts.map((p) => ({ slug: p.slug }));
   return [...staticSlugs, ...dynamicSlugs];
@@ -25,7 +25,7 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const { slug } = await params;
 
-  const dynPost = getPostBySlug(slug);
+  const dynPost = await getPostBySlug(slug);
   const staticPost = blogPosts.find((p) => p.slug === slug);
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://inlygiaRe.vn";
@@ -144,7 +144,7 @@ export default async function PostPage(
   const { slug } = await params;
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://inlygiaRe.vn";
 
-  const dynPost = getPostBySlug(slug);
+  const dynPost = await getPostBySlug(slug);
   const staticPost = blogPosts.find((p) => p.slug === slug);
 
   if (!dynPost && !staticPost) notFound();
